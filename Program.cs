@@ -16,6 +16,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
