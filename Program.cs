@@ -5,8 +5,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var app = builder.Build();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
 
-app.MapGet("/", () => "Hello World!");
+builder.Services.AddControllers();
+
+var app = builder.Build();
+app.UseCors();
+
+app.MapControllers();
 
 app.Run();
